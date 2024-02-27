@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react"
 
-interface Location {
-  name: string
-}
-
 export default function App() {
   const [locations, setLocations] = useState<Location[]>([])
 
@@ -29,4 +25,23 @@ export default function App() {
       </ul>
     </div>
   )
+}
+
+interface Location {
+  name: string
+  category: string
+  url: string // likely ought to be a URL
+  date: string // likely ought to be a Date
+  excerpt: string
+  thumbnail: string // likely ought to be a URL
+  lat: number
+  lng: number
+  address: string,
+  phone: string
+  twitter: string
+  stars_beer: number
+  stars_atmosphere: number
+  stars_amenities: number
+  stars_value: number
+  tags: string // ought to be an array of strings
 }
