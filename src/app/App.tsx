@@ -20,7 +20,9 @@ export default function App() {
       <h1>Pubs 🍺</h1>
       <ul>
         {locations.map(location => (
-          <li key={location.name}>{location.name}</li>
+          <li key={location.name}>
+            {location.name} tags: {location.tags.join(" ")}
+          </li>
         ))}
       </ul>
     </div>
@@ -43,5 +45,5 @@ interface Location {
   stars_atmosphere: number
   stars_amenities: number
   stars_value: number
-  tags: string // ought to be an array of strings
+  tags: string[]
 }
