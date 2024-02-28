@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import styles from "./App.module.css";
 
 export default function App() {
   const [locations, setLocations] = useState<Location[]>([])
@@ -17,11 +18,25 @@ export default function App() {
 
   return (
     <div>
-      <h1>Pubs 🍺</h1>
-      <ul>
+      <h1>Leeds Pub Finder 🍺</h1>
+      <ul className={styles.locations}>
         {locations.map(location => (
-          <li key={location.name}>
-            {location.name} tags: {location.tags.join(" ")}
+          <li className={styles.location} key={location.name}>
+
+            <div className={styles.details}>
+              <h2 className={styles.locationName}>{location.name}</h2>
+              <p className={styles.description}>{location.excerpt}</p>
+              <p>
+                {location.tags.map(tag =>
+                  <span key={tag} className={styles.tag}>{tag}</span>
+                )}
+              </p>
+            </div>
+            <div className={styles.thumbnailContainer}>
+              <img className={styles.thumbnail}
+                src={location.thumbnail}
+                alt={`Photo of ${location.name}`} />
+            </div>
           </li>
         ))}
       </ul>

@@ -34,7 +34,7 @@ async function readLocations() {
         stars_atmosphere: Number.parseFloat(location.stars_atmosphere),
         stars_amenities: Number.parseFloat(location.stars_amenities),
         stars_value: Number.parseFloat(location.stars_value),
-        tags: location.tags.split(",")
+        tags: location.tags.length > 0 ? location.tags.split(",") : []
       }))
 
   return locations
