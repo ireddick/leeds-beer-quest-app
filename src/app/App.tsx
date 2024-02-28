@@ -24,7 +24,7 @@ export default function App() {
           <li className={styles.location} key={location.name}>
 
             <div className={styles.details}>
-              <h2 className={styles.locationName}>{location.name}</h2>
+              <h2 className={styles.name}>{location.name}</h2>
               <p className={styles.description}>{location.excerpt}</p>
               <p>
                 {location.tags.map(tag =>
