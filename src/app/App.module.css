@@ -1,20 +1,29 @@
+.title {
+  margin-bottom: 16px;
+}
+
 .locations {
   list-style-type: none;
 }
 
 .location {
-  height: 140px;
+  height: 160px;
   margin-bottom: 16px;
   display: flex;
+}
+
+.details {
+  width: 500px;
+  padding-right: 16px;
 }
 
 .name {
   margin-bottom: 4px;
 }
 
-.details {
-  width: 500px;
-  padding-right: 16px;
+.address {
+  font-size: 0.9em;
+  margin-bottom: 8px;
 }
 
 .description {

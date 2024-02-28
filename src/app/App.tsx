@@ -18,13 +18,14 @@ export default function App() {
 
   return (
     <div>
-      <h1>Leeds Pub Finder 🍺</h1>
+      <h1 className={styles.title}>Leeds Pub Finder 🍺</h1>
+
       <ul className={styles.locations}>
         {locations.map(location => (
           <li className={styles.location} key={location.name}>
-
             <div className={styles.details}>
               <h2 className={styles.name}>{location.name}</h2>
+              <p className={styles.address}>{location.address}</p>
               <p className={styles.description}>{location.excerpt}</p>
               <p>
                 {location.tags.map(tag =>
