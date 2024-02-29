@@ -5,7 +5,7 @@ describe("venue service", () => {
   test('returns all venues in the data set', async () => {
     const subject = new VenueService({
       async fetch() {
-        return await fakeBeerQuestData
+        return fakeBeerQuestData
       },
     })
 
@@ -17,7 +17,7 @@ describe("venue service", () => {
   test('returns venues ordered closest to furthest', async () => {
     const subject = new VenueService({
       async fetch() {
-        return await fakeBeerQuestData
+        return fakeBeerQuestData
       },
     })
 
