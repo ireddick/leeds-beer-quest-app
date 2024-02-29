@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import styles from "./App.module.css";
+import { getDistance } from "geolib"
 
 export default function App() {
   const [location, setLocation] = useState<Coord>(LEEDS_CITY_CENTRE)
@@ -22,10 +23,20 @@ export default function App() {
   useEffect(() => {
     const fetchLocations = async () => {
       const response = await fetch("/api/locations")
+      const venueData = (await response.json()).data
+      const allVenues: Venue[] =
+        venueData
+          .map((venue: {
+            lat: number
+            lng: number
+          }) => ({
+            ...venue,
+            distance: distanceBetween(location, { lat: venue.lat, lng: venue.lng })
+          }))
 
-      const locations: Venue[] = (await response.json()).data
+      allVenues.sort((a, b) => a.distance - b.distance)
 
-      setVenues(locations)
+      setVenues(allVenues)
     }
 
     fetchLocations()
@@ -43,6 +54,7 @@ export default function App() {
             <div className={styles.details}>
               <h2 className={styles.name}>{location.name}</h2>
               <p className={styles.address}>{location.address}</p>
+              <p>{location.distance} m</p>
               <p className={styles.description}>{location.excerpt}</p>
               <p>
                 {location.tags.map(tag =>
@@ -79,6 +91,7 @@ interface Venue {
   stars_amenities: number
   stars_value: number
   tags: string[]
+  distance: number
 }
 
 interface Coord {
@@ -87,3 +100,7 @@ interface Coord {
 }
 
 const LEEDS_CITY_CENTRE: Coord = { lat: 53.79648, lng: -1.54785 }
+
+function distanceBetween(pointA: Coord, pointB: Coord) {
+  return getDistance(pointA, pointB)
+}
