@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react"
 import styles from "./App.module.css";
-import { getDistance } from "geolib"
+import { VenueService, Venue, Coord } from "./venue_service"
 
-export default function App() {
+interface AppProps {
+  venueService: VenueService
+}
+
+export default function App(props: AppProps) {
   const [location, setLocation] = useState<Coord>(LEEDS_CITY_CENTRE)
   const [venues, setVenues] = useState<Venue[]>([])
 
@@ -17,30 +21,16 @@ export default function App() {
       (_) => {
         setLocation(LEEDS_CITY_CENTRE)
       }
-    );
+    )
   }, [])
 
   useEffect(() => {
-    const fetchLocations = async () => {
-      const response = await fetch("/api/locations")
-      const venueData = (await response.json()).data
-      const allVenues: Venue[] =
-        venueData
-          .map((venue: {
-            lat: number
-            lng: number
-          }) => ({
-            ...venue,
-            distance: distanceBetween(location, { lat: venue.lat, lng: venue.lng })
-          }))
-
-      allVenues.sort((a, b) => a.distance - b.distance)
-
-      setVenues(allVenues)
+    const fetchVenues = async () => {
+      setVenues(await props.venueService.find(location))
     }
 
-    fetchLocations()
-  }, [location])
+    fetchVenues()
+  }, [location, props.venueService])
 
   return (
     <div>
@@ -74,33 +64,4 @@ export default function App() {
   )
 }
 
-interface Venue {
-  name: string
-  category: string
-  url: string // likely ought to be a URL
-  date: string // likely ought to be a Date
-  excerpt: string
-  thumbnail: string // likely ought to be a URL
-  lat: number
-  lng: number
-  address: string
-  phone: string
-  twitter: string
-  stars_beer: number
-  stars_atmosphere: number
-  stars_amenities: number
-  stars_value: number
-  tags: string[]
-  distance: number
-}
-
-interface Coord {
-  lat: number
-  lng: number
-}
-
 const LEEDS_CITY_CENTRE: Coord = { lat: 53.79648, lng: -1.54785 }
-
-function distanceBetween(pointA: Coord, pointB: Coord) {
-  return getDistance(pointA, pointB)
-}
