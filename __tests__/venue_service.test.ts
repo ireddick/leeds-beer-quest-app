@@ -1,5 +1,6 @@
-import { describe, expect, test } from '@jest/globals'
-import { VenueService, BeerQuestRecord } from '@/app/venue_service'
+import { describe, expect, test } from "@jest/globals"
+import { VenueService } from "@/app/venue_service"
+import { BeerQuestRecord } from "@/app/beer_quest"
 
 describe("venue service", () => {
   test('returns all venues in the data set', async () => {
