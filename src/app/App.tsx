@@ -46,7 +46,7 @@ export default function App({ findVenues }: AppProps) {
         {venues.map(venue => (
           <li className={styles.venue} key={venue.name}>
             <div className={styles.details}>
-              <h3 className={styles.name}>{venue.name}</h3>
+              <h3 className={styles.name}><a href={venue.url}>{venue.name}</a></h3>
               <p className={styles.address}>{venue.address}</p>
               <p className={styles.infoBar}>
                 {distanceAwayInKm(venue)}km away &middot;

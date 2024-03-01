@@ -28,6 +28,15 @@
   margin-bottom: 4px;
 }
 
+.name a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.name a:hover {
+  text-decoration: underline
+}
+
 .address {
   font-size: 0.9em;
   margin-bottom: 8px;
