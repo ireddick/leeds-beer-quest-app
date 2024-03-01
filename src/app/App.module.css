@@ -11,7 +11,7 @@
 }
 
 .venue {
-  height: 220px;
+  height: fit-content;
   display: flex;
   overflow-y: hidden;
   padding-top: 16px;
@@ -19,8 +19,15 @@
   border-bottom: 1px solid black
 }
 
+/* Mobile */
+@media (max-width: 700px) {
+  .venue {
+    flex-direction: column-reverse;
+  }
+}
+
 .details {
-  width: 500px;
+  flex: 70%;
   padding-right: 16px;
 }
 
@@ -51,7 +58,7 @@
 }
 
 .thumbnailContainer {
-  width: 200px;
+  flex: 30%;
 }
 
 .thumbnail {
