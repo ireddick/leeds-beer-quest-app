@@ -43,23 +43,26 @@ export default function App({ findVenues }: AppProps) {
       </header>
 
       <ul className={styles.venueList}>
-        {venues.map(location => (
-          <li className={styles.venue} key={location.name}>
+        {venues.map(venue => (
+          <li className={styles.venue} key={venue.name}>
             <div className={styles.details}>
-              <h3 className={styles.name}>{location.name}</h3>
-              <p className={styles.address}>{location.address}</p>
-              <p>{location.distance} m</p>
-              <p className={styles.description}>{location.excerpt}</p>
+              <h3 className={styles.name}>{venue.name}</h3>
+              <p className={styles.address}>{venue.address}</p>
+              <p className={styles.infoBar}>
+                {distanceAwayInKm(venue)}km away &middot;
+                Overall rating {overallRating(venue)}
+              </p>
+              <p className={styles.description}>{venue.excerpt}</p>
               <p>
-                {location.tags.map(tag =>
+                {venue.tags.map(tag =>
                   <span key={tag} className={styles.tag}>{tag}</span>
                 )}
               </p>
             </div>
             <div className={styles.thumbnailContainer}>
               <img className={styles.thumbnail}
-                src={location.thumbnail}
-                alt={`Photo of ${location.name}`} />
+                src={venue.thumbnail}
+                alt={`Photo of ${venue.name}`} />
             </div>
           </li>
         ))}
@@ -69,3 +72,19 @@ export default function App({ findVenues }: AppProps) {
 }
 
 const LEEDS_CITY_CENTRE: Coord = { lat: 53.79648, lng: -1.54785 }
+
+function overallRating(venue: Venue) {
+  const average =
+    (venue.stars_amenities +
+      venue.stars_atmosphere +
+      venue.stars_beer +
+      venue.stars_value) / 4
+
+  return Math.round(average * 10 / 5) * 5 / 10
+}
+
+function distanceAwayInKm(venue: Venue) {
+  const distanceInKm = (venue.distance / 1000)
+
+  return Math.round(distanceInKm * 10) / 10
+}
