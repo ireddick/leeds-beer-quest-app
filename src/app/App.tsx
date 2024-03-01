@@ -3,7 +3,7 @@ import styles from "./App.module.css";
 import { VenueService, Venue, Coord } from "./venue_service"
 
 interface AppProps {
-  venueService: VenueService
+  findVenues: VenueService
 }
 
 export default function App(props: AppProps) {
@@ -26,11 +26,11 @@ export default function App(props: AppProps) {
 
   useEffect(() => {
     const fetchVenues = async () => {
-      setVenues(await props.venueService.find(location))
+      setVenues(await props.findVenues(location))
     }
 
     fetchVenues()
-  }, [location, props.venueService])
+  }, [location, props])
 
   return (
     <div>

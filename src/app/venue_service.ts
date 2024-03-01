@@ -1,31 +1,24 @@
 import { getDistance } from "geolib"
-import { BeerQuestRecord, BeerQuestDataProvider } from "./beer_quest"
+import { BeerQuestRecord } from "./beer_quest"
 
-export class VenueService {
-  readonly dataProvider: BeerQuestDataProvider
+export type VenueService = (location: Coord) => Promise<Venue[]>
 
-  constructor(dataProvider: BeerQuestDataProvider = new HttpDataProvider()) {
-    this.dataProvider = dataProvider
-  }
+export async function findVenues(
+  location: Coord,
+  fetchData: BeerQuestDataProvider = fetchDataFromApi) {
 
-  async find(location: Coord) {
-    const beerQuestRecords = await this.dataProvider.fetch()
+  const beerQuestRecords = await fetchData()
 
-    const venues: Venue[] =
-      beerQuestRecords
-        .map((record) => ({
-          ...record,
-          distance: getDistance(location, { lat: record.lat, lng: record.lng })
-        }))
+  const venues: Venue[] =
+    beerQuestRecords
+      .map((record) => ({
+        ...record,
+        distance: getDistance(location, { lat: record.lat, lng: record.lng })
+      }))
 
-    venues.sort((a, b) => a.distance - b.distance)
+  venues.sort((a, b) => a.distance - b.distance)
 
-    return venues
-  }
-}
-
-export interface Venue extends BeerQuestRecord {
-  distance: number
+  return venues
 }
 
 export interface Coord {
@@ -33,11 +26,15 @@ export interface Coord {
   lng: number
 }
 
-class HttpDataProvider implements BeerQuestDataProvider {
-  async fetch() {
-    const response = await fetch("/api/locations")
-    const locations: BeerQuestRecord[] = (await response.json()).data
+export interface Venue extends BeerQuestRecord {
+  distance: number
+}
 
-    return locations
-  }
+type BeerQuestDataProvider = () => Promise<BeerQuestRecord[]>
+
+async function fetchDataFromApi() {
+  const response = await fetch("/api/locations")
+  const locations: BeerQuestRecord[] = (await response.json()).data
+
+  return locations
 }

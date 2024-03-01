@@ -1,35 +1,27 @@
 import { describe, expect, test } from "@jest/globals"
-import { VenueService } from "@/app/venue_service"
+import { findVenues } from "@/app/venue_service"
 import { BeerQuestRecord } from "@/app/beer_quest"
 
 describe("venue service", () => {
   test('returns all venues in the data set', async () => {
-    const subject = new VenueService({
-      async fetch() {
-        return fakeBeerQuestData
-      },
-    })
+    const result = await findVenues({ lat: 50, lng: 50 }, readTestData)
 
-    const result = await subject.find({ lat: 50, lng: 50 })
-
-    expect(result.length).toEqual(fakeBeerQuestData.length)
+    expect(result.length).toEqual(TEST_BEER_QUEST_DATA.length)
   })
 
   test('returns venues ordered closest to furthest', async () => {
-    const subject = new VenueService({
-      async fetch() {
-        return fakeBeerQuestData
-      },
-    })
-
-    const result = await subject.find({ lat: 50, lng: 50 })
+    const result = await findVenues({ lat: 50, lng: 50 }, readTestData)
     const resultOrder = result.map(venue => venue.name)
 
     expect(resultOrder).toEqual(["The Bar", "Pub A", "Pub B"])
   })
 })
 
-const fakeBeerQuestData: BeerQuestRecord[] = [
+async function readTestData() {
+  return TEST_BEER_QUEST_DATA
+}
+
+const TEST_BEER_QUEST_DATA: BeerQuestRecord[] = [
   {
     name: "Pub A",
     category: "Pub reviews",
