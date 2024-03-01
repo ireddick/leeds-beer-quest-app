@@ -10,6 +10,9 @@ export default function App({ findVenues }: AppProps) {
   const [location, setLocation] = useState<Coord>(LEEDS_CITY_CENTRE)
   const [venues, setVenues] = useState<Venue[]>([])
 
+  const userLocationText =
+    location === LEEDS_CITY_CENTRE ? "the city centre" : "your current location"
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -36,14 +39,14 @@ export default function App({ findVenues }: AppProps) {
     <div>
       <header className={styles.appHeading}>
         <h1 className={styles.title}>Leeds Pub Finder 🍺🍷</h1>
-        <p>Venues near {location.lat}, {location.lng}</p>
+        <h2>venues near {userLocationText}</h2>
       </header>
 
       <ul className={styles.venueList}>
         {venues.map(location => (
           <li className={styles.venue} key={location.name}>
             <div className={styles.details}>
-              <h2 className={styles.name}>{location.name}</h2>
+              <h3 className={styles.name}>{location.name}</h3>
               <p className={styles.address}>{location.address}</p>
               <p>{location.distance} m</p>
               <p className={styles.description}>{location.excerpt}</p>
