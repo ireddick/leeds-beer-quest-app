@@ -38,15 +38,15 @@ export default function App({ findVenues }: AppProps) {
   return (
     <div>
       <header className={styles.appHeading}>
-        <h1 className={styles.title}>Leeds Pub Finder 🍺</h1>
-        <h2>venues near {userLocationText}</h2>
+        <h1 className={styles.title}>Leeds Pub Finder&nbsp;🍺</h1>
+        <p>Showing venues near {userLocationText}</p>
       </header>
 
       <ul className={styles.venueList}>
         {venues.map(venue => (
           <li className={styles.venue} key={venue.name}>
             <div className={styles.details}>
-              <h3 className={styles.name}><a href={venue.url}>{venue.name}</a></h3>
+              <h2 className={styles.name}><a href={venue.url}>{venue.name}</a></h2>
               <p className={styles.address}>{venue.address}</p>
               <p className={styles.infoBar}>
                 {distanceAwayInKm(venue)}km away &middot;
@@ -67,7 +67,7 @@ export default function App({ findVenues }: AppProps) {
           </li>
         ))}
       </ul>
-    </div>
+    </div >
   )
 }
 
