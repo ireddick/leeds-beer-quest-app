@@ -36,7 +36,7 @@ export default function App({ findVenues }: AppProps) {
   }, [location, findVenues])
 
   return (
-    <div>
+    <>
       <header className={styles.appHeading}>
         <h1 className={styles.title}>Leeds Pub Finder&nbsp;🍺</h1>
         <p>Showing venues near {userLocationText}</p>
@@ -67,7 +67,7 @@ export default function App({ findVenues }: AppProps) {
           </li>
         ))}
       </ul>
-    </div >
+    </>
   )
 }
 
