@@ -1,5 +1,5 @@
-import { parseCsv } from "@/app/beer_quest"
 import { describe, expect, test } from "@jest/globals"
+import { parseCsv } from "@/app/beer_quest_parser"
 
 describe("csv parser", () => {
   test("returns all records in the data set", () => {
@@ -31,7 +31,7 @@ describe("csv parser", () => {
     })
   })
 
-  test("parses an empty tags string to an empty array", () => {
+  test("converts an empty tags string to an empty array", () => {
     const result = parseCsv(TEST_CSV)
 
     expect(result[2].tags).toEqual([])

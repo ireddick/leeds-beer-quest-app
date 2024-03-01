@@ -1,5 +1,5 @@
 import { promises as fs } from "fs"
-import { parseCsv } from "@/app/beer_quest"
+import { parseCsv } from "@/app/beer_quest_parser"
 
 export async function GET() {
   const locations = parseCsv(await readCsv())
