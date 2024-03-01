@@ -6,7 +6,7 @@ interface AppProps {
   findVenues: VenueFinder
 }
 
-export default function App(props: AppProps) {
+export default function App({ findVenues }: AppProps) {
   const [location, setLocation] = useState<Coord>(LEEDS_CITY_CENTRE)
   const [venues, setVenues] = useState<Venue[]>([])
 
@@ -25,12 +25,12 @@ export default function App(props: AppProps) {
   }, [])
 
   useEffect(() => {
-    const fetchVenues = async () => {
-      setVenues(await props.findVenues(location))
+    const refreshVenues = async () => {
+      setVenues(await findVenues(location))
     }
 
-    fetchVenues()
-  }, [location, props])
+    refreshVenues()
+  }, [location, findVenues])
 
   return (
     <div>
