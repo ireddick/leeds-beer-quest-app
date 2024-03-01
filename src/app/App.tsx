@@ -36,7 +36,6 @@ export default function App(props: AppProps) {
     <div>
       <header className={styles.appHeading}>
         <h1 className={styles.title}>Leeds Pub Finder 🍺🍷</h1>
-
         <p>Venues near {location.lat}, {location.lng}</p>
       </header>
 
