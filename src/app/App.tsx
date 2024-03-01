@@ -39,7 +39,7 @@ export default function App({ findVenues }: AppProps) {
     <div>
       <header className={styles.appHeading}>
         <h1 className={styles.title}>Leeds Pub Finder 🍺🍷</h1>
-        <h2>venues near {userLocationText}</h2>
+        <h2>📍 venues near {userLocationText}</h2>
       </header>
 
       <ul className={styles.venueList}>

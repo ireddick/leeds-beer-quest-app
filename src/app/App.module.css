@@ -1,5 +1,5 @@
 .appHeading {
-  margin-bottom: 24px;
+  margin-bottom: 8px;
 }
 
 .title {
@@ -11,9 +11,12 @@
 }
 
 .venue {
-  height: 160px;
-  margin-bottom: 16px;
+  height: 220px;
   display: flex;
+  overflow-y: hidden;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid black
 }
 
 .details {
@@ -35,7 +38,7 @@
 }
 
 .description {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .thumbnailContainer {
