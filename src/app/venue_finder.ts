@@ -5,8 +5,8 @@ export type VenueFinder = (location: Coord) => Promise<Venue[]>
 
 export async function findVenues(
   location: Coord,
-  fetchData: BeerQuestDataProvider = fetchDataFromApi) {
-
+  fetchData: BeerQuestDataProvider = fetchDataFromApi
+) {
   const beerQuestRecords = await fetchData()
 
   const venues: Venue[] =
