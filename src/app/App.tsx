@@ -34,13 +34,15 @@ export default function App(props: AppProps) {
 
   return (
     <div>
-      <h1 className={styles.title}>Leeds Pub Finder 🍺</h1>
+      <header className={styles.appHeading}>
+        <h1 className={styles.title}>Leeds Pub Finder 🍺🍷</h1>
 
-      <p>Venues near {location.lat}, {location.lng}</p>
+        <p>Venues near {location.lat}, {location.lng}</p>
+      </header>
 
-      <ul className={styles.locations}>
+      <ul className={styles.venueList}>
         {venues.map(location => (
-          <li className={styles.location} key={location.name}>
+          <li className={styles.venue} key={location.name}>
             <div className={styles.details}>
               <h2 className={styles.name}>{location.name}</h2>
               <p className={styles.address}>{location.address}</p>

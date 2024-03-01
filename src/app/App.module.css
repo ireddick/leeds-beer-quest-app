@@ -1,12 +1,16 @@
-.title {
-  margin-bottom: 16px;
+.appHeading {
+  margin-bottom: 24px;
 }
 
-.locations {
+.title {
+  margin-bottom: 4px;
+}
+
+.venueList {
   list-style-type: none;
 }
 
-.location {
+.venue {
   height: 160px;
   margin-bottom: 16px;
   display: flex;
