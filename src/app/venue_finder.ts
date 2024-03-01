@@ -1,7 +1,7 @@
 import { getDistance } from "geolib"
 import { BeerQuestRecord } from "./beer_quest_parser"
 
-export type VenueService = (location: Coord) => Promise<Venue[]>
+export type VenueFinder = (location: Coord) => Promise<Venue[]>
 
 export async function findVenues(
   location: Coord,

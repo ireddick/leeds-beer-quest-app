@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
 import styles from "./App.module.css";
-import { VenueService, Venue, Coord } from "./venue_service"
+import { VenueFinder, Venue, Coord } from "./venue_finder"
 
 interface AppProps {
-  findVenues: VenueService
+  findVenues: VenueFinder
 }
 
 export default function App(props: AppProps) {
