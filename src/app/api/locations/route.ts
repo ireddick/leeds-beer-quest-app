@@ -1,4 +1,5 @@
 import { promises as fs } from "fs"
+import path from "path"
 import { parseCsv } from "@/app/beer_quest_parser"
 
 export async function GET() {
@@ -9,13 +10,11 @@ export async function GET() {
   })
 }
 
-/*
-  TODO: this has to work in different environments
-  - currently it will only work in dev?
-*/
 async function readCsv() {
+  const csvPath = path.resolve("public", "leedsbeerquest.csv")
+
   const csvData =
-    await fs.readFile(process.cwd() + '/src/app/leedsbeerquest.csv', 'utf8')
+    await fs.readFile(csvPath, 'utf8')
 
   return csvData
 }
