@@ -1,10 +1,12 @@
 import { getDistance } from "geolib"
 import { BeerQuestRecord } from "./beer_quest"
 
-export type VenueFinder = (location: Coord) => Promise<Venue[]>
+export type VenueFinder =
+  (location: Coord, searchTerm: string) => Promise<Venue[]>
 
 export async function findVenues(
   location: Coord,
+  searchTerm: string,
   fetchData: BeerQuestDataProvider = fetchDataFromApi
 ) {
   const beerQuestRecords = await fetchData()
@@ -16,9 +18,17 @@ export async function findVenues(
         distance: getDistance(location, { lat: record.lat, lng: record.lng })
       }))
 
-  venues.sort((a, b) => a.distance - b.distance)
+  const filteredVenues: Venue[] =
+    venues
+      .filter((venue) => {
+        if (searchTerm.trim() === "") { return true }
 
-  return venues
+        return venue.tags.join(" ").includes(searchTerm)
+      })
+
+  filteredVenues.sort((a, b) => a.distance - b.distance)
+
+  return filteredVenues
 }
 
 export interface Coord {

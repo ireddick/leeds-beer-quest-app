@@ -4,13 +4,13 @@ import { BeerQuestRecord } from "@/app/beer_quest"
 
 describe("venue finder", () => {
   test('returns all venues in the data set', async () => {
-    const result = await findVenues({ lat: 50, lng: 50 }, readTestData)
+    const result = await findVenues({ lat: 50, lng: 50 }, "", readTestData)
 
     expect(result.length).toEqual(TEST_BEER_QUEST_DATA.length)
   })
 
   test('returns venues ordered closest to furthest', async () => {
-    const result = await findVenues({ lat: 50, lng: 50 }, readTestData)
+    const result = await findVenues({ lat: 50, lng: 50 }, "", readTestData)
     const resultOrder = result.map(venue => venue.name)
 
     expect(resultOrder).toEqual(["The Bar", "Pub A", "Pub B"])

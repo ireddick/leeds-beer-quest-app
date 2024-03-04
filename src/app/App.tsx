@@ -8,10 +8,14 @@ interface AppProps {
 
 export default function App({ findVenues }: AppProps) {
   const [location, setLocation] = useState<Coord>(LEEDS_CITY_CENTRE)
+  const [searchTerm, setSearchTerm] = useState<string>("")
   const [venues, setVenues] = useState<Venue[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const userLocationText =
     location === LEEDS_CITY_CENTRE ? "the city centre" : "your current location"
+
+  const hasVenues = venues.length > 0
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -29,11 +33,23 @@ export default function App({ findVenues }: AppProps) {
 
   useEffect(() => {
     const refreshVenues = async () => {
-      setVenues(await findVenues(location))
+      setIsLoading(true)
+      try {
+        setVenues(await findVenues(location, searchTerm))
+      } finally {
+        setIsLoading(false)
+      }
     }
 
     refreshVenues()
-  }, [location, findVenues])
+  }, [location, searchTerm, findVenues])
+
+  function onSearchSubmit(e: any) {
+    e.preventDefault()
+    const searchTerm = e.target.searchTerm.value
+
+    setSearchTerm(searchTerm)
+  }
 
   return (
     <>
@@ -42,36 +58,51 @@ export default function App({ findVenues }: AppProps) {
         <p>Showing venues near {userLocationText}</p>
       </header>
 
-      <ul className={styles.venueList}>
-        {venues.map(venue => (
-          <li className={styles.venue} key={venue.name}>
-            <div className={styles.details}>
-              <h2 className={styles.name}><a href={venue.url}>{venue.name}</a></h2>
-              <p className={styles.address}>{venue.address}</p>
-              <p className={styles.distance}>
-                📍 {distanceAwayInKm(venue)}km <a href={`https://maps.google.com/?q=${venue.lat},${venue.lng}`}>Show on map</a>
-              </p>
-              <p className={styles.description}>{venue.excerpt}</p>
-              <div className={styles.ratings}>
-                <p><Rating stars={venue.stars_beer} /> Beer</p>
-                <p><Rating stars={venue.stars_amenities} /> Amenities</p>
-                <p><Rating stars={venue.stars_atmosphere} /> Atmosphere</p>
-                <p><Rating stars={venue.stars_value} /> Value</p>
+      <form className={styles.search} onSubmit={onSearchSubmit}>
+        <label>
+          Search tags: <input
+            name="searchTerm"
+            type="input"
+            placeholder="eg. wifi">
+          </input>
+        </label>
+      </form>
+
+      {(!hasVenues && isLoading) && <p>Loading...</p>}
+
+      {(!hasVenues && !isLoading) && <p>No matching venues!</p>}
+
+      {(hasVenues) &&
+        <ul className={styles.venueList}>
+          {venues.map(venue => (
+            <li className={styles.venue} key={venue.name}>
+              <div className={styles.details}>
+                <h2 className={styles.name}><a href={venue.url}>{venue.name}</a></h2>
+                <p className={styles.address}>{venue.address}</p>
+                <p className={styles.distance}>
+                  📍 {distanceAwayInKm(venue)}km <a href={mapLinkUrl(venue)}>Show on map</a>
+                </p>
+                <p className={styles.description}>{venue.excerpt}</p>
+                <div className={styles.ratings}>
+                  <p><Rating stars={venue.stars_beer} /> Beer</p>
+                  <p><Rating stars={venue.stars_amenities} /> Amenities</p>
+                  <p><Rating stars={venue.stars_atmosphere} /> Atmosphere</p>
+                  <p><Rating stars={venue.stars_value} /> Value</p>
+                </div>
+                <p>
+                  {venue.tags.map(tag =>
+                    <span key={tag} className={styles.tag}>{tag}</span>
+                  )}
+                </p>
               </div>
-              <p>
-                {venue.tags.map(tag =>
-                  <span key={tag} className={styles.tag}>{tag}</span>
-                )}
-              </p>
-            </div>
-            <div className={styles.thumbnailContainer}>
-              <img className={styles.thumbnail}
-                src={venue.thumbnail}
-                alt={`Photo of ${venue.name}`} />
-            </div>
-          </li>
-        ))}
-      </ul>
+              <div className={styles.thumbnailContainer}>
+                <img className={styles.thumbnail}
+                  src={venue.thumbnail}
+                  alt={`Photo of ${venue.name}`} />
+              </div>
+            </li>
+          ))}
+        </ul>}
     </>
   )
 }
@@ -82,6 +113,10 @@ function distanceAwayInKm(venue: Venue) {
   const distanceInKm = (venue.distance / 1000)
 
   return Math.round(distanceInKm * 10) / 10
+}
+
+function mapLinkUrl(venue: Venue) {
+  return `https://maps.google.com/?q=${venue.lat},${venue.lng}`
 }
 
 function Rating({ stars }: { stars: number }) {
