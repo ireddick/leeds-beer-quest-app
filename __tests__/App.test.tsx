@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@jest/globals"
 import "@testing-library/jest-dom"
-import { act, render, screen, waitFor } from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react"
 import App from "@/app/App"
 import { Coord, Venue } from "@/app/lib/venue_service"
 
