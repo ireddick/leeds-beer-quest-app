@@ -9,6 +9,13 @@ describe("venue finder", () => {
     expect(result.length).toEqual(TEST_BEER_QUEST_DATA.length)
   })
 
+  test('computes the distance to each venue in meters', async () => {
+    const result = await findVenues({ lat: 50, lng: 50 }, "", readTestData)
+    const resultDistances = result.map(venue => venue.distance)
+
+    expect(resultDistances).toEqual([0, 1113, 13229])
+  })
+
   test('returns venues ordered closest to furthest', async () => {
     const result = await findVenues({ lat: 50, lng: 50 }, "", readTestData)
     const resultOrder = result.map(venue => venue.name)
@@ -29,7 +36,7 @@ const TEST_BEER_QUEST_DATA: BeerQuestRecord[] = [
     date: (new Date()).toISOString(),
     excerpt: "An excellent pub A",
     thumbnail: "https://",
-    lat: 50.1,
+    lat: 50.01,
     lng: 50,
     address: "123 Some Street, Leeds, L12 3AB",
     phone: "1234 567 8910",
