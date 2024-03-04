@@ -74,7 +74,7 @@ export default function App({ findVenues }: AppProps) {
 
       {noMatchingVenues && <p>No matching venues!</p>}
 
-      {(hasResults) &&
+      {hasResults &&
         <ul className={styles.venueList}>
           {venues.map(venue => (
             <li className={styles.venue} key={venue.name}>
