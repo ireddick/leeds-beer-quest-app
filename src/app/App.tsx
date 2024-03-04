@@ -15,7 +15,9 @@ export default function App({ findVenues }: AppProps) {
   const userLocationText =
     location === LEEDS_CITY_CENTRE ? "the city centre" : "your current location"
 
-  const hasVenues = venues.length > 0
+  const hasResults = venues.length > 0
+  const initialLoad = isLoading && !hasResults
+  const noMatchingVenues = !isLoading && !hasResults
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -68,11 +70,11 @@ export default function App({ findVenues }: AppProps) {
         </label>
       </form>
 
-      {(!hasVenues && isLoading) && <p>Loading...</p>}
+      {initialLoad && <p>Loading...</p>}
 
-      {(!hasVenues && !isLoading) && <p>No matching venues!</p>}
+      {noMatchingVenues && <p>No matching venues!</p>}
 
-      {(hasVenues) &&
+      {(hasResults) &&
         <ul className={styles.venueList}>
           {venues.map(venue => (
             <li className={styles.venue} key={venue.name}>
