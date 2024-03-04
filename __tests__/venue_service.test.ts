@@ -3,24 +3,48 @@ import { findVenues } from "@/app/venue_service"
 import { BeerQuestRecord } from "@/app/beer_quest"
 
 describe("venue finder", () => {
-  test('returns all venues in the data set', async () => {
-    const result = await findVenues({ lat: 50, lng: 50 }, "", readTestData)
+  describe("distance to venues", () => {
+    test('computes the distance to each venue in meters', async () => {
+      const result = await findVenues({ lat: 50, lng: 50 }, "", readTestData)
+      const resultDistances = result.map(venue => venue.distance)
 
-    expect(result.length).toEqual(TEST_BEER_QUEST_DATA.length)
+      expect(resultDistances).toEqual([0, 1113, 13229])
+    })
+
+    test('returns venues ordered closest to furthest', async () => {
+      const result = await findVenues({ lat: 50, lng: 50 }, "", readTestData)
+      const resultOrder = result.map(venue => venue.name)
+
+      expect(resultOrder).toEqual(["The Bar", "Pub A", "Pub B"])
+    })
   })
 
-  test('computes the distance to each venue in meters', async () => {
-    const result = await findVenues({ lat: 50, lng: 50 }, "", readTestData)
-    const resultDistances = result.map(venue => venue.distance)
+  describe("searching on tags", () => {
+    test('returns all venues if no search term given', async () => {
+      const searchTerm = ""
 
-    expect(resultDistances).toEqual([0, 1113, 13229])
-  })
+      const result = await findVenues({ lat: 50, lng: 50 }, "", readTestData)
 
-  test('returns venues ordered closest to furthest', async () => {
-    const result = await findVenues({ lat: 50, lng: 50 }, "", readTestData)
-    const resultOrder = result.map(venue => venue.name)
+      expect(result.length).toEqual(TEST_BEER_QUEST_DATA.length)
+    })
 
-    expect(resultOrder).toEqual(["The Bar", "Pub A", "Pub B"])
+    test('returns venues with matching tags', async () => {
+      const searchTerm = "food"
+
+      const result = await findVenues({ lat: 50, lng: 50 }, searchTerm, readTestData)
+      const resultNames = result.map(venue => venue.name)
+
+      expect(resultNames).toContain("Pub A")
+      expect(resultNames).toContain("The Bar")
+    })
+
+    test('returns no venues if no matches', async () => {
+      const searchTerm = "DOES NOT MATCH ANYTHING"
+
+      const result = await findVenues({ lat: 50, lng: 50 }, searchTerm, readTestData)
+
+      expect(result.length).toEqual(0)
+    })
   })
 })
 
