@@ -49,7 +49,7 @@ export default function App({ findVenues }: AppProps) {
               <h2 className={styles.name}><a href={venue.url}>{venue.name}</a></h2>
               <p className={styles.address}>{venue.address}</p>
               <p className={styles.distance}>
-                📍 {distanceAwayInKm(venue)}km away
+                📍 {distanceAwayInKm(venue)}km <a href={`https://maps.google.com/?q=${venue.lat},${venue.lng}`}>Show on map</a>
               </p>
               <p className={styles.description}>{venue.excerpt}</p>
               <div className={styles.ratings}>
