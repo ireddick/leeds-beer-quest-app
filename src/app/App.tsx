@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import styles from "./App.module.css";
-import { VenueFinder, Venue, Coord } from "./venue_finder"
+import { VenueFinder, Venue, Coord } from "./venue_service"
 
 interface AppProps {
   findVenues: VenueFinder

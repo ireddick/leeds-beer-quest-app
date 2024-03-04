@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@jest/globals"
-import { findVenues } from "@/app/venue_finder"
-import { BeerQuestRecord } from "@/app/beer_quest_parser"
+import { findVenues } from "@/app/venue_service"
+import { BeerQuestRecord } from "@/app/beer_quest"
 
 describe("venue finder", () => {
   test('returns all venues in the data set', async () => {

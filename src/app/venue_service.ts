@@ -1,5 +1,5 @@
 import { getDistance } from "geolib"
-import { BeerQuestRecord } from "./beer_quest_parser"
+import { BeerQuestRecord } from "./beer_quest"
 
 export type VenueFinder = (location: Coord) => Promise<Venue[]>
 
