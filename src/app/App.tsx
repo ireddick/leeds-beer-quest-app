@@ -48,11 +48,16 @@ export default function App({ findVenues }: AppProps) {
             <div className={styles.details}>
               <h2 className={styles.name}><a href={venue.url}>{venue.name}</a></h2>
               <p className={styles.address}>{venue.address}</p>
-              <p className={styles.infoBar}>
-                {distanceAwayInKm(venue)}km away &middot;
-                Overall rating {overallRating(venue)}
+              <p className={styles.distance}>
+                {distanceAwayInKm(venue)}km away
               </p>
               <p className={styles.description}>{venue.excerpt}</p>
+              <div className={styles.ratings}>
+                <p>Beer: {venue.stars_beer}</p>
+                <p>Amenities: {venue.stars_amenities}</p>
+                <p>Atmosphere: {venue.stars_atmosphere}</p>
+                <p>Value: {venue.stars_value}</p>
+              </div>
               <p>
                 {venue.tags.map(tag =>
                   <span key={tag} className={styles.tag}>{tag}</span>

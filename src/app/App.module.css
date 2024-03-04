@@ -52,11 +52,15 @@
   margin-bottom: 8px;
 }
 
-.infoBar {
+.distance {
   margin-bottom: 8px;
 }
 
 .description {
+  margin-bottom: 8px;
+}
+
+.ratings {
   margin-bottom: 12px;
 }
 
