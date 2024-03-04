@@ -78,16 +78,6 @@ export default function App({ findVenues }: AppProps) {
 
 const LEEDS_CITY_CENTRE: Coord = { lat: 53.79648, lng: -1.54785 }
 
-function overallRating(venue: Venue) {
-  const average =
-    (venue.stars_amenities +
-      venue.stars_atmosphere +
-      venue.stars_beer +
-      venue.stars_value) / 4
-
-  return Math.round(average * 10 / 5) * 5 / 10
-}
-
 function distanceAwayInKm(venue: Venue) {
   const distanceInKm = (venue.distance / 1000)
 
