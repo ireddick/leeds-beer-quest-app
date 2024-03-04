@@ -58,4 +58,4 @@ Basic source layout:
 
 I've taken an approach of using pure TS code for interesting logic where possible (ie. no React or Next dependencies), with most of the testing focus on this. This means I don't have to use React testing library unless necessary - just plain unit tests. I've also taken a basic approach to stubbing dependencies in the App component tests. As we just pass in a couple of plain TS 'service' functions via props to the App component (basically dependency injection - see `src/app/page.tsx`), we can provide simple stubbed versions in the tests. One of the things that gets stubbed is a location service that allows us to provide a current location without having to interact with the browser location permissions dialog.
 
-Overall I'd like to have added at least one proper end to end test, and some more component tests - however I had a lot of problems with React testing library and was eventually pressed for time.
+Overall I'd like to have added at least one proper end to end test, and some more component tests (such as submitting a search), however I had a lot of problems with React testing library and was eventually pressed for time.
