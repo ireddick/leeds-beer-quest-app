@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Leeds Beer Quest App
 
-## Getting Started
+This is an app designed to make the Leeds Beer Quest dataset available to X-Lab staff.
 
-First, run the development server:
+The app is built with TypeScript, React and Next.js, using the default create-next-app codebase as a starter, with CSS modules for styling. Test infrastructure was subsequently added as per the current Next.js documentation.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Running the app
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Prerequisites: Node.js 18.17 and a compatible version of NPM.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To run the app locally in development mode, first clone the repo, then run:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+    npm install
 
-## Learn More
+    npm run dev
 
-To learn more about Next.js, take a look at the following resources:
+then visit http://localhost:3000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To start the app in production mode:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    npm run build
 
-## Deploy on Vercel
+    npm run start
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To run the tests:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    npm run test
+
+## Features
+
+The app displays the list of venues relative to the user's location, closest first. User location is opted into via the usual browser location permission dialog, and if permission is denied the app will default to using Leeds city centre.
+
+Additionally, the list of venues can be searched, which will filter the list of venues based on matching tags.
+
+Distance from the current location is shown for each venue, along with a link to open the venue location in Google maps.
+
+The app has a reasonably responsive design, so should work OK across different screen sizes (eg. mobile).
+
+## Implementation approach
+
+I wanted to keep the CSV as the source of truth, so decided to have a simple backend that loads, parses and serves the data from the CSV file. This is implemented using a basic Next.js API route at `src/app/api/locations/route.ts`. The CSV is stored in the Next.js `public` directory for no other reason than it's the only location I know of that works in both dev and production modes.
+
+The parser logic can be found in `src/app/lib/beer_quest.ts`. The parser outputs slightly cleaned up version of what's in the CSV, eg. the tags string is transformed into an array in the output object.
+
+On the client side, I'm making minimal use of Next.js features and am essentially using it to host a traditional SPA. The root component of the app can be found in `src/app/App.tsx`, and I've not broken any components out into their own files. The App component is hosted in the default 'home' Next.js page at `src/app/page.tsx`.
+
+The client side logic is almost entirely implemented in `src/app/lib/venue_service.ts`. I wanted to do as much logic client-side as possible, so the backend is really just serving up a static dataset. The main thing here is `venueService` which takes a location and a search term, and returns a list of venues ordered by distance from the current location, filtered by the search term. There's no caching or any other attempt at optimisation here!
+
+Basic source layout:
+
+`src/app` - root of the Next/React app
+`src/app/lib` - modules with no Next/React dependencies
+`__test__` - tests for both lib modules and React components
+
+## Testing approach
+
+I've taken an approach of using pure TS code for interesting logic where possible (ie. no React or Next dependencies), with most of the testing focus on this. This means I don't have to use React testing library unless necessary - just plain unit tests. I've also taken a basic approach to stubbing dependencies in the App component tests. As we just pass in a couple of plain TS 'service' functions via props to the App component (basically dependency injection - see `src/app/page.tsx`), we can provide simple stubbed versions in the tests. One of the things that gets stubbed is a location service that allows us to provide a current location without having to interact with the browser location permissions dialog.
+
+Overall I'd like to have added at least one proper end to end test, and some more component tests - however I had a lot of problems with React testing library and eventually ran out of time.
