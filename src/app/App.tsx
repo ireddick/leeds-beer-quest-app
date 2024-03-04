@@ -53,10 +53,10 @@ export default function App({ findVenues }: AppProps) {
               </p>
               <p className={styles.description}>{venue.excerpt}</p>
               <div className={styles.ratings}>
-                <p>Beer: {venue.stars_beer}</p>
-                <p>Amenities: {venue.stars_amenities}</p>
-                <p>Atmosphere: {venue.stars_atmosphere}</p>
-                <p>Value: {venue.stars_value}</p>
+                <p><Rating stars={venue.stars_beer} /> Beer</p>
+                <p><Rating stars={venue.stars_amenities} /> Amenities</p>
+                <p><Rating stars={venue.stars_atmosphere} /> Atmosphere</p>
+                <p><Rating stars={venue.stars_value} /> Value</p>
               </div>
               <p>
                 {venue.tags.map(tag =>
@@ -82,4 +82,11 @@ function distanceAwayInKm(venue: Venue) {
   const distanceInKm = (venue.distance / 1000)
 
   return Math.round(distanceInKm * 10) / 10
+}
+
+function Rating({ stars }: { stars: number }) {
+  const ratingText = stars.toString()
+  const ratingUrl = `https://duckduckgo.com/assets/ta-ratings/${ratingText}.svg`
+
+  return (<img src={ratingUrl} alt={ratingText} />)
 }
