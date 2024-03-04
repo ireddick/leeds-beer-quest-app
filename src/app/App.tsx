@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react"
 import styles from "./App.module.css";
+import { LocationProvider } from "./location_service"
 import { VenueFinder, Venue, Coord } from "./venue_service"
 
 interface AppProps {
-  findVenues: VenueFinder
+  findVenues: VenueFinder,
+  getLocation: LocationProvider
 }
 
-export default function App({ findVenues }: AppProps) {
+export default function App({
+  findVenues,
+  getLocation
+}: AppProps) {
   const [location, setLocation] = useState<Coord>(LEEDS_CITY_CENTRE)
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [venues, setVenues] = useState<Venue[]>([])
@@ -20,18 +25,18 @@ export default function App({ findVenues }: AppProps) {
   const noMatchingVenues = !isLoading && !hasResults
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setLocation({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        })
-      },
-      (_) => {
+    const refreshLocation = async () => {
+      const location = await getLocation()
+
+      if (location != undefined) {
+        setLocation(location)
+      } else {
         setLocation(LEEDS_CITY_CENTRE)
       }
-    )
-  }, [])
+    }
+
+    refreshLocation()
+  }, [getLocation])
 
   useEffect(() => {
     const refreshVenues = async () => {
