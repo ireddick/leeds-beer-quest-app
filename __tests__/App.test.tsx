@@ -1,20 +1,36 @@
 import { describe, expect, test } from "@jest/globals"
 import "@testing-library/jest-dom"
-import { render, screen, waitFor } from "@testing-library/react"
+import { act, render, screen, waitFor } from "@testing-library/react"
 import App from "@/app/App"
 import { Coord, Venue } from "@/app/venue_service"
 
 describe("App", () => {
-  test('loads and displays venues', () => {
+  test('it renders', async () => {
     const subject =
       <App
         findVenues={stubbedFindVenues}
         getLocation={stubbedGetLocation} />
 
-    waitFor(() => render(subject))
+    await waitFor(() => render(subject))
 
     const title = screen.getByRole("heading", { level: 1 })
     expect(title.textContent).toMatch("Leeds Pub Finder")
+  })
+
+  test('shows venues', async () => {
+    const subject =
+      <App
+        findVenues={stubbedFindVenues}
+        getLocation={stubbedGetLocation} />
+
+    await waitFor(() => render(subject))
+
+    const venueTitles = screen.getAllByRole("heading", { level: 2 })
+    const venueNames = venueTitles.map(title => title.textContent)
+
+    expect(venueNames).toContain("The Bar")
+    expect(venueNames).toContain("Pub A")
+    expect(venueNames).toContain("Pub B")
   })
 })
 
