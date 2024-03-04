@@ -49,7 +49,9 @@ The client side logic is almost entirely implemented in `src/app/lib/venue_servi
 Basic source layout:
 
 `src/app` - root of the Next/React app
+
 `src/app/lib` - modules with no Next/React dependencies
+
 `__test__` - tests for both lib modules and React components
 
 ## Testing approach
