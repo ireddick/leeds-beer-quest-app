@@ -28,6 +28,7 @@ describe("App", () => {
     const venueTitles = screen.getAllByRole("heading", { level: 2 })
     const venueNames = venueTitles.map(title => title.textContent)
 
+    expect(venueNames.length).toBe(3)
     expect(venueNames).toContain("The Bar")
     expect(venueNames).toContain("Pub A")
     expect(venueNames).toContain("Pub B")
