@@ -2,7 +2,7 @@
 
 This is an app designed to make the Leeds Beer Quest dataset available to X-Lab staff.
 
-The app is built with TypeScript, React and Next.js, using the default create-next-app codebase as a starter, with CSS modules for styling. Test infrastructure was subsequently added as per the current Next.js documentation.
+The app is built with TypeScript, React and Next.js, using the default `create-next-app` codebase as a starter, with CSS modules for styling. Test infrastructure was subsequently added as per the current Next.js documentation.
 
 ## Running the app
 
