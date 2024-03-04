@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@jest/globals"
-import { parseCsv } from "@/app/beer_quest"
+import { parseCsv } from "@/app/lib/beer_quest"
 
 describe("csv parser", () => {
   test("returns all records in the data set", () => {

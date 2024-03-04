@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import styles from "./App.module.css";
-import { LocationProvider } from "./location_service"
-import { VenueFinder, Venue, Coord } from "./venue_service"
+import { LocationProvider } from "./lib/location_service"
+import { VenueFinder, Venue, Coord } from "./lib/venue_service"
 
 interface AppProps {
   findVenues: VenueFinder,

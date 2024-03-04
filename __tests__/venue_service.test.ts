@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@jest/globals"
-import { findVenues } from "@/app/venue_service"
-import { BeerQuestRecord } from "@/app/beer_quest"
+import { findVenues } from "@/app/lib/venue_service"
+import { BeerQuestRecord } from "@/app/lib/beer_quest"
 
 describe("venue finder", () => {
   describe("distance to venues", () => {
