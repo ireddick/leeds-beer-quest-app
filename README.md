@@ -28,7 +28,7 @@ To run the tests:
 
 ## Features
 
-The app displays the list of venues relative to the user's location, closest first. User location is opted into via the usual browser location permission dialog, and if permission is denied the app will default to using Leeds city centre.
+The app displays a list of venues relative to the user's location, closest first. User location is opted into via the usual browser location permission dialog, and if permission is denied the app will default to using Leeds city centre.
 
 Additionally, the list of venues can be searched, which will filter the list of venues based on matching tags.
 
