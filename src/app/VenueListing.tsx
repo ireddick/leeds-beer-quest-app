@@ -13,7 +13,7 @@ export default function VenueListing({ venue }: VenueListingProps) {
         <h2 className={styles.name}><a href={venue.url}>{venue.name}</a></h2>
         <p className={styles.address}>{venue.address}</p>
         <p className={styles.distance}>
-          📍 {distanceAwayInKm(venue)}km <a href={mapLinkUrl(venue)}>Show on map</a>
+          {`📍 ${distanceAwayInKm(venue)}km`} <a href={mapLinkUrl(venue)}>Show on map</a>
         </p>
         <p className={styles.description}>{venue.excerpt}</p>
         <div className={styles.ratings}>
