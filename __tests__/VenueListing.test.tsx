@@ -15,9 +15,9 @@ describe("VenueListing", () => {
     const titleLink = screen.getByText(venue.name)
     expect(titleLink.getAttribute("href")).toBe(venue.url)
     const address = screen.getByText(venue.address)
-    expect(address.textContent).toBeDefined()
+    expect(address).toBeDefined()
     const excerpt = screen.getByText(venue.excerpt)
-    expect(excerpt.textContent).toBeDefined()
+    expect(excerpt).toBeDefined()
   })
 
   test("distance away", async () => {
@@ -79,7 +79,7 @@ describe("VenueListing", () => {
 
     venue.tags.forEach(t => {
       const tag = screen.getByText(t)
-      expect(tag.textContent).toBeDefined()
+      expect(tag).toBeDefined()
     })
   })
 })
