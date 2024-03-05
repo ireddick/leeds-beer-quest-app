@@ -52,7 +52,9 @@ Basic source layout:
 
 `src/app/lib` - modules with no Next/React dependencies
 
-`__test__` - tests for both lib modules and React components
+`__tests__` - tests for both lib modules and React components
+
+`__tests__/lib` - tests with no Next/React dependencies
 
 ## Testing approach
 
