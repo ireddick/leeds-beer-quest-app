@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import styles from "./App.module.css";
 import { LocationProvider } from "./lib/location_service"
 import { VenueFinder, Venue, Coord } from "./lib/venue_service"
+import Rating from "./Rating";
 
 interface AppProps {
   findVenues: VenueFinder,
@@ -124,11 +125,4 @@ function distanceAwayInKm(venue: Venue) {
 
 function mapLinkUrl(venue: Venue) {
   return `https://maps.google.com/?q=${venue.lat},${venue.lng}`
-}
-
-function Rating({ stars }: { stars: number }) {
-  const ratingText = stars.toString()
-  const ratingUrl = `https://duckduckgo.com/assets/ta-ratings/${ratingText}.svg`
-
-  return (<img src={ratingUrl} alt={ratingText} />)
 }
