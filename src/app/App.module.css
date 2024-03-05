@@ -4,7 +4,7 @@
   padding-bottom: 12px;
   position: -webkit-sticky;
   position: sticky;
-  background-color: #fafafa;
+  background-color: var(--background-color-main);
 }
 
 .title {
