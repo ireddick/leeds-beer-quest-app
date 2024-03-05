@@ -2,7 +2,11 @@ import styles from "./VenueListing.module.css"
 import { Venue } from "./lib/venue_service"
 import Rating from "./Rating"
 
-export default function VenueListing({ venue }: { venue: Venue }) {
+interface VenueListingProps {
+  venue: Venue
+}
+
+export default function VenueListing({ venue }: VenueListingProps) {
   return (
     <div className={styles.venue}>
       <div className={styles.details}>
