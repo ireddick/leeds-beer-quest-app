@@ -11,10 +11,20 @@ describe("VenueListing", () => {
     await waitFor(() => render(subject))
 
     const title = screen.getByRole("heading", { level: 2 })
-    expect(title.textContent).toMatch("The Bar")
+    expect(title.textContent).toBe("The Bar")
+    const titleLink = screen.getByText(venue.name)
+    expect(titleLink.getAttribute("href")).toBe(venue.url)
+    const address = screen.getByText(venue.address)
+    expect(address.textContent).toBeDefined()
+    const excerpt = screen.getByText(venue.excerpt)
+    expect(excerpt.textContent).toBeDefined()
+    venue.tags.forEach(t => {
+      const tag = screen.getByText(t)
+      expect(tag.textContent).toBeDefined()
+    })
   })
 
-  test("distance", async () => {
+  test("distance away", async () => {
     const venue = {
       ...TEST_VENUE,
       distance: 2543
@@ -27,7 +37,7 @@ describe("VenueListing", () => {
     expect(distance).toBeDefined()
   })
 
-  test("distance under 0.05km", async () => {
+  test("distance away under 0.05km", async () => {
     const venue = {
       ...TEST_VENUE,
       distance: 49
