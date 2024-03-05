@@ -2,7 +2,7 @@
 
 This is an app designed to explore the Leeds Beer Quest venue data as found here: https://datamillnorth.org/dataset/e1dzd/leeds-beer-quest
 
-The app is built with TypeScript, React and Next.js, using the default `create-next-app` codebase as a starter, with CSS modules for styling. Test infrastructure was subsequently added as per the current Next.js documentation.
+The app is built with TypeScript, React and Next.js, using the default `create-next-app` codebase as a starter, with CSS modules for styling. Test infrastructure using Jest was subsequently added as per the current Next.js documentation.
 
 ## Running the app
 
