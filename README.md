@@ -38,9 +38,9 @@ The app has a reasonably responsive design, so should work OK across different s
 
 ## Implementation approach
 
-I wanted to keep the CSV as the source of truth, so decided to have a simple backend that loads, parses and serves the data from the CSV file. This is implemented using a basic Next.js API route at `src/app/api/locations/route.ts`. The CSV is stored in the Next.js `public` directory for no other reason than it's the only location I know of that works in both dev and production modes.
+I wanted to keep the CSV as the source of truth, so decided to have a simple backend that loads, parses and serves the data from the CSV file as JSON. This is implemented using a basic Next.js API route at `src/app/api/locations/route.ts`. The CSV is stored in the Next.js `public` directory for no other reason than it's the only location I know of that works in both dev and production modes.
 
-The parser logic can be found in `src/app/lib/beer_quest.ts`. The parser outputs slightly cleaned up version of what's in the CSV, eg. the tags string is transformed into an array in the output object.
+The parser logic can be found in `src/app/lib/beer_quest.ts`. The parser outputs a slightly neater version of what's in the CSV, eg. the tags string is transformed into an array in the output object.
 
 On the client side, I'm making minimal use of Next.js features and am essentially using it to host a traditional SPA. The root component of the app can be found in `src/app/App.tsx`, and I've not broken any components out into their own files. The App component is hosted in the default 'home' Next.js page at `src/app/page.tsx`.
 
