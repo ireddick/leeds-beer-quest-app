@@ -54,7 +54,7 @@ export default function App({
     }
 
     refreshVenues()
-  }, [location, searchTerm, findVenues])
+  }, [location, searchTerm, findVenues, windowWrapper])
 
   function onSearchSubmit(e: any) {
     e.preventDefault()
