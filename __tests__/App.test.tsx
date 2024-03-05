@@ -29,14 +29,13 @@ describe("App", () => {
 
     const venueTitles = screen.getAllByRole("heading", { level: 2 })
     const venueNames = venueTitles.map(title => title.textContent)
-
     expect(venueNames.length).toBe(3)
     expect(venueNames).toContain("The Bar")
     expect(venueNames).toContain("Pub A")
     expect(venueNames).toContain("Pub B")
   })
 
-  test('user location provided', async () => {
+  test('location info when user location provided', async () => {
     const subject =
       <App
         findVenues={stubbedFindVenues}
@@ -45,11 +44,11 @@ describe("App", () => {
 
     await waitFor(() => render(subject))
 
-    const location = screen.getByText("Venues near your location")
-    expect(location).toBeDefined()
+    const locationInfo = screen.getByText("Venues near your location")
+    expect(locationInfo).toBeDefined()
   })
 
-  test('user location not provided', async () => {
+  test('location info when user location not provided', async () => {
     const getUndefinedLocation = async () => undefined
     const subject =
       <App
@@ -59,8 +58,8 @@ describe("App", () => {
 
     await waitFor(() => render(subject))
 
-    const location = screen.getByText("Venues near the city centre")
-    expect(location).toBeDefined()
+    const locationInfo = screen.getByText("Venues near the city centre")
+    expect(locationInfo).toBeDefined()
   })
 })
 
