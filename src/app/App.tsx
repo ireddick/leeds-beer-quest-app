@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import styles from "./App.module.css";
 import { LocationProvider } from "./lib/location_service"
 import { VenueFinder, Venue, Coord } from "./lib/venue_service"
-import Rating from "./Rating";
+import VenueListing from "./VenueListing";
 
 interface AppProps {
   findVenues: VenueFinder,
@@ -83,46 +83,14 @@ export default function App({
       {hasResults &&
         <ul className={styles.venueList}>
           {venues.map(venue => (
-            <li className={styles.venue} key={venue.name}>
-              <div className={styles.details}>
-                <h2 className={styles.name}><a href={venue.url}>{venue.name}</a></h2>
-                <p className={styles.address}>{venue.address}</p>
-                <p className={styles.distance}>
-                  📍 {distanceAwayInKm(venue)}km <a href={mapLinkUrl(venue)}>Show on map</a>
-                </p>
-                <p className={styles.description}>{venue.excerpt}</p>
-                <div className={styles.ratings}>
-                  <p><Rating stars={venue.stars_beer} /> Beer</p>
-                  <p><Rating stars={venue.stars_amenities} /> Amenities</p>
-                  <p><Rating stars={venue.stars_atmosphere} /> Atmosphere</p>
-                  <p><Rating stars={venue.stars_value} /> Value</p>
-                </div>
-                <p>
-                  {venue.tags.map(tag =>
-                    <span key={tag} className={styles.tag}>{tag}</span>
-                  )}
-                </p>
-              </div>
-              <div className={styles.thumbnailContainer}>
-                <img className={styles.thumbnail}
-                  src={venue.thumbnail}
-                  alt={`Photo of ${venue.name}`} />
-              </div>
+            <li key={venue.name}>
+              <VenueListing venue={venue} />
             </li>
           ))}
-        </ul>}
+        </ul>
+      }
     </>
   )
 }
 
 const LEEDS_CITY_CENTRE: Coord = { lat: 53.79648, lng: -1.54785 }
-
-function distanceAwayInKm(venue: Venue) {
-  const distanceInKm = (venue.distance / 1000)
-
-  return Math.round(distanceInKm * 10) / 10
-}
-
-function mapLinkUrl(venue: Venue) {
-  return `https://maps.google.com/?q=${venue.lat},${venue.lng}`
-}
