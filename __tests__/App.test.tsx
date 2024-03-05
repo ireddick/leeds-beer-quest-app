@@ -9,7 +9,8 @@ describe("App", () => {
     const subject =
       <App
         findVenues={stubbedFindVenues}
-        getLocation={stubbedGetLocation} />
+        getLocation={stubbedGetLocation}
+        windowWrapper={stubbedWindowWrapper} />
 
     await waitFor(() => render(subject))
 
@@ -21,7 +22,8 @@ describe("App", () => {
     const subject =
       <App
         findVenues={stubbedFindVenues}
-        getLocation={stubbedGetLocation} />
+        getLocation={stubbedGetLocation}
+        windowWrapper={stubbedWindowWrapper} />
 
     await waitFor(() => render(subject))
 
@@ -41,6 +43,10 @@ async function stubbedGetLocation() {
 
 async function stubbedFindVenues(location: Coord, searchTerm: string) {
   return TEST_VENUE_DATA
+}
+
+const stubbedWindowWrapper = {
+  scrollToTop() { }
 }
 
 const TEST_VENUE_DATA: Venue[] = [

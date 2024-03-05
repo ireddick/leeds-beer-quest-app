@@ -3,15 +3,18 @@ import styles from "./App.module.css";
 import { LocationProvider } from "./lib/location_service"
 import { VenueFinder, Venue, Coord } from "./lib/venue_service"
 import VenueListing from "./VenueListing";
+import { WindowWrapper } from "./lib/window_wrapper";
 
 interface AppProps {
   findVenues: VenueFinder,
-  getLocation: LocationProvider
+  getLocation: LocationProvider,
+  windowWrapper: WindowWrapper
 }
 
 export default function App({
   findVenues,
-  getLocation
+  getLocation,
+  windowWrapper
 }: AppProps) {
   const [location, setLocation] = useState<Coord>(LEEDS_CITY_CENTRE)
   const [searchTerm, setSearchTerm] = useState<string>("")
@@ -43,7 +46,7 @@ export default function App({
     const refreshVenues = async () => {
       setIsLoading(true)
       try {
-        window.scrollTo(0, 0)
+        windowWrapper.scrollToTop()
         setVenues(await findVenues(location, searchTerm))
       } finally {
         setIsLoading(false)
