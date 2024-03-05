@@ -47,18 +47,14 @@ describe("VenueListing", () => {
   })
 
   test("map link", async () => {
-    const venue = {
-      ...TEST_VENUE,
-      lat: 54.321,
-      lng: 45.678
-    }
+    const venue = TEST_VENUE
     const subject = <VenueListing venue={venue} />
 
     await waitFor(() => render(subject))
 
     const mapLink = screen.getByText("Show on map")
     expect(mapLink.getAttribute("href"))
-      .toBe("https://maps.google.com/?q=54.321,45.678")
+      .toBe(`https://maps.google.com/?q=${venue.lat},${venue.lng}`)
   })
 
   test("thumbnail", async () => {
