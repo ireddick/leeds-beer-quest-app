@@ -43,6 +43,7 @@ export default function App({
     const refreshVenues = async () => {
       setIsLoading(true)
       try {
+        window.scrollTo(0, 0)
         setVenues(await findVenues(location, searchTerm))
       } finally {
         setIsLoading(false)
