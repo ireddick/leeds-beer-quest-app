@@ -18,7 +18,7 @@ describe("App", () => {
     expect(title.textContent).toMatch("Leeds Pub Finder")
   })
 
-  test('shows venues', async () => {
+  test('shows the venues provided', async () => {
     const subject =
       <App
         findVenues={stubbedFindVenues}
