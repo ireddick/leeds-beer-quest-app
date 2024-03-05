@@ -5,7 +5,7 @@ import { Venue } from "@/app/lib/venue_service"
 
 describe("VenueListing", () => {
   test('it renders', async () => {
-    const venue = testVenue;
+    const venue = TEST_VENUE;
     const subject = <VenueListing venue={venue} />
 
     await waitFor(() => render(subject))
@@ -16,7 +16,7 @@ describe("VenueListing", () => {
 
   test("distance", async () => {
     const venue = {
-      ...testVenue,
+      ...TEST_VENUE,
       distance: 2543
     }
     const subject = <VenueListing venue={venue} />
@@ -29,7 +29,7 @@ describe("VenueListing", () => {
 
   test("distance under 0.05km", async () => {
     const venue = {
-      ...testVenue,
+      ...TEST_VENUE,
       distance: 49
     }
     const subject = <VenueListing venue={venue} />
@@ -39,9 +39,24 @@ describe("VenueListing", () => {
     const distance = screen.getByText("📍 0km")
     expect(distance).toBeDefined()
   })
+
+  test("map link", async () => {
+    const venue = {
+      ...TEST_VENUE,
+      lat: 54.321,
+      lng: 45.678
+    }
+    const subject = <VenueListing venue={venue} />
+
+    await waitFor(() => render(subject))
+
+    const mapLink = screen.getByText("Show on map")
+    expect(mapLink.getAttribute("href"))
+      .toBe("https://maps.google.com/?q=54.321,45.678")
+  })
 })
 
-const testVenue: Venue = {
+const TEST_VENUE: Venue = {
   name: "The Bar",
   category: "Bar reviews",
   url: "https://example.com/the-bar",
