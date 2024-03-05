@@ -35,10 +35,37 @@ describe("App", () => {
     expect(venueNames).toContain("Pub A")
     expect(venueNames).toContain("Pub B")
   })
+
+  test('user location provided', async () => {
+    const subject =
+      <App
+        findVenues={stubbedFindVenues}
+        getLocation={stubbedGetLocation}
+        windowWrapper={stubbedWindowWrapper} />
+
+    await waitFor(() => render(subject))
+
+    const location = screen.getByText("Venues near your location")
+    expect(location).toBeDefined()
+  })
+
+  test('user location not provided', async () => {
+    const getUndefinedLocation = async () => undefined
+    const subject =
+      <App
+        findVenues={stubbedFindVenues}
+        getLocation={getUndefinedLocation}
+        windowWrapper={stubbedWindowWrapper} />
+
+    await waitFor(() => render(subject))
+
+    const location = screen.getByText("Venues near the city centre")
+    expect(location).toBeDefined()
+  })
 })
 
 async function stubbedGetLocation() {
-  return undefined
+  return { lat: 50, lng: 50 }
 }
 
 async function stubbedFindVenues(location: Coord, searchTerm: string) {

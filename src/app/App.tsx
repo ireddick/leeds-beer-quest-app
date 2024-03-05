@@ -67,7 +67,7 @@ export default function App({
     <>
       <header className={styles.appHeading}>
         <h1 className={styles.title}>Leeds Pub Finder&nbsp;🍺</h1>
-        <p className={styles.location}>Venues near {userLocationText}</p>
+        <p className={styles.location}>{`Venues near ${userLocationText}`}</p>
         <form className={styles.search} onSubmit={onSearchSubmit}>
           <input
             name="searchTerm"
