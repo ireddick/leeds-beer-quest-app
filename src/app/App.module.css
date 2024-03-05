@@ -1,13 +1,18 @@
 .appHeading {
-  margin-bottom: 8px;
+  top: 0;
+  padding-top: 16px;
+  padding-bottom: 12px;
+  position: -webkit-sticky;
+  position: sticky;
+  background-color: #fafafa;
 }
 
 .title {
   margin-bottom: 4px;
 }
 
-.search {
-  margin-bottom: 16px;
+.location {
+  margin-bottom: 4px;
 }
 
 .search input {

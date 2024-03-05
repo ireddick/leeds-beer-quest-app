@@ -19,7 +19,7 @@ export default function App({
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const userLocationText =
-    location === LEEDS_CITY_CENTRE ? "the city centre" : "your current location"
+    location === LEEDS_CITY_CENTRE ? "the city centre" : "your location"
 
   const hasResults = venues.length > 0
   const initialLoad = isLoading && !hasResults
@@ -63,18 +63,15 @@ export default function App({
     <>
       <header className={styles.appHeading}>
         <h1 className={styles.title}>Leeds Pub Finder&nbsp;🍺</h1>
-        <p>Showing venues near {userLocationText}</p>
-      </header>
-
-      <form className={styles.search} onSubmit={onSearchSubmit}>
-        <label>
-          Search tags: <input
+        <p className={styles.location}>Venues near {userLocationText}</p>
+        <form className={styles.search} onSubmit={onSearchSubmit}>
+          <input
             name="searchTerm"
             type="input"
-            placeholder="eg. wifi">
+            placeholder="Filter by tag">
           </input>
-        </label>
-      </form>
+        </form>
+      </header>
 
       {initialLoad && <p>Loading...</p>}
 
