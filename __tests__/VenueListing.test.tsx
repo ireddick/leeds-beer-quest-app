@@ -11,17 +11,13 @@ describe("VenueListing", () => {
     await waitFor(() => render(subject))
 
     const title = screen.getByRole("heading", { level: 2 })
-    expect(title.textContent).toBe("The Bar")
+    expect(title.textContent).toBe(venue.name)
     const titleLink = screen.getByText(venue.name)
     expect(titleLink.getAttribute("href")).toBe(venue.url)
     const address = screen.getByText(venue.address)
     expect(address.textContent).toBeDefined()
     const excerpt = screen.getByText(venue.excerpt)
     expect(excerpt.textContent).toBeDefined()
-    venue.tags.forEach(t => {
-      const tag = screen.getByText(t)
-      expect(tag.textContent).toBeDefined()
-    })
   })
 
   test("distance away", async () => {
@@ -63,6 +59,28 @@ describe("VenueListing", () => {
     const mapLink = screen.getByText("Show on map")
     expect(mapLink.getAttribute("href"))
       .toBe("https://maps.google.com/?q=54.321,45.678")
+  })
+
+  test("thumbnail", async () => {
+    const venue = TEST_VENUE
+    const subject = <VenueListing venue={venue} />
+
+    await waitFor(() => render(subject))
+
+    const thumbnail = screen.getByAltText(`Photo of ${venue.name}`)
+    expect(thumbnail.getAttribute("src")).toBe(venue.thumbnail)
+  })
+
+  test("tags", async () => {
+    const venue = TEST_VENUE
+    const subject = <VenueListing venue={venue} />
+
+    await waitFor(() => render(subject))
+
+    venue.tags.forEach(t => {
+      const tag = screen.getByText(t)
+      expect(tag.textContent).toBeDefined()
+    })
   })
 })
 
