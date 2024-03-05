@@ -56,6 +56,8 @@ Basic source layout:
 
 `__tests__/lib` - tests with no Next/React dependencies
 
+`__tests__/__support__` - shared test data
+
 ## Testing approach
 
 I've taken an approach of using pure TS code for interesting logic where possible (ie. no React or Next dependencies), with much of the testing being focused on this. This means I don't have to use React testing library unless necessary - just plain old unit tests. I've also taken a basic approach to stubbing dependencies in the App component tests. As we just pass in a couple of plain TS 'service' functions via props to the App component (basic dependency injection - see `src/app/page.tsx`), we can provide simple stubbed versions in the tests instead of using things like Mock Service Worker or module mocks. An example of this is the location service, which allows us to provide a current location without having to interact with the browser location permissions dialog.
