@@ -42,7 +42,7 @@ I wanted to keep the CSV as the source of truth, so decided to have a simple bac
 
 The parser logic can be found in `src/app/lib/beer_quest.ts`. The parser outputs a slightly friendlier version of what's in the CSV, eg. the tags string is transformed into an array in the output object.
 
-On the client side, I'm making minimal use of Next.js features and am essentially using it to host a traditional SPA. The root component of the app can be found in `src/app/App.tsx`, and is hosted in the default 'home' Next.js page at `src/app/page.tsx`.
+On the client side, I'm making minimal use of Next.js features and am essentially using it to host a traditional SPA. The root component of the app can be found in `src/app/App.tsx`, and is hosted in the default 'home' Next.js page in `src/app/page.tsx`.
 
 The client-side logic for the venue data is implemented in `src/app/lib/venue_service.ts`. I wanted to do as much logic client-side as possible, so the backend is really just serving up a static dataset. The main thing here is `venueService` which takes a location and a search term, and returns a list of venues ordered by distance from the current location, filtered by the search term. There's no caching or any other attempt at optimisation here!
 
