@@ -42,9 +42,9 @@ I wanted to keep the CSV as the source of truth, so decided to have a simple bac
 
 The parser logic can be found in `src/app/lib/beer_quest.ts`. The parser outputs a slightly neater version of what's in the CSV, eg. the tags string is transformed into an array in the output object.
 
-On the client side, I'm making minimal use of Next.js features and am essentially using it to host a traditional SPA. The root component of the app can be found in `src/app/App.tsx`, and I've not broken any components out into their own files. The App component is hosted in the default 'home' Next.js page at `src/app/page.tsx`.
+On the client side, I'm making minimal use of Next.js features and am essentially using it to host a traditional SPA. The root component of the app can be found in `src/app/App.tsx`, and is hosted in the default 'home' Next.js page at `src/app/page.tsx`.
 
-The client side logic is almost entirely implemented in `src/app/lib/venue_service.ts`. I wanted to do as much logic client-side as possible, so the backend is really just serving up a static dataset. The main thing here is `venueService` which takes a location and a search term, and returns a list of venues ordered by distance from the current location, filtered by the search term. There's no caching or any other attempt at optimisation here!
+The client-side logic for the venue data is implemented in `src/app/lib/venue_service.ts`. I wanted to do as much logic client-side as possible, so the backend is really just serving up a static dataset. The main thing here is `venueService` which takes a location and a search term, and returns a list of venues ordered by distance from the current location, filtered by the search term. There's no caching or any other attempt at optimisation here!
 
 Basic source layout:
 
@@ -56,4 +56,4 @@ Basic source layout:
 
 ## Testing approach
 
-I've taken an approach of using pure TS code for interesting logic where possible (ie. no React or Next dependencies), with most of the testing focus on this. This means I don't have to use React testing library unless necessary - just plain unit tests. I've also taken a basic approach to stubbing dependencies in the App component tests. As we just pass in a couple of plain TS 'service' functions via props to the App component (basically dependency injection - see `src/app/page.tsx`), we can provide simple stubbed versions in the tests instead of using things like Mock Service Worker. One of the things that gets stubbed is a location service that allows us to provide a current location without having to interact with the browser location permissions dialog.
+I've taken an approach of using pure TS code for interesting logic where possible (ie. no React or Next dependencies), with much of the testing being focused on this. This means I don't have to use React testing library unless necessary - just plain unit tests. I've also taken a basic approach to stubbing dependencies in the App component tests. As we just pass in a couple of plain TS 'service' functions via props to the App component (basic dependency injection - see `src/app/page.tsx`), we can provide simple stubbed versions in the tests instead of using things like Mock Service Worker. One of the things that gets stubbed is a location service - this allows us to provide a current location without having to interact with the browser location permissions dialog.
