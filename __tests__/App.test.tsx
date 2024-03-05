@@ -1,5 +1,6 @@
 import { describe, expect, test } from "@jest/globals"
 import { render, screen, waitFor } from "@testing-library/react"
+import "@testing-library/jest-dom/jest-globals"
 import App from "@/app/App"
 import { Coord } from "@/app/lib/venue_service"
 import { TEST_VENUE_DATA } from "./__support__/venue_data"
@@ -45,7 +46,7 @@ describe("App", () => {
     await waitFor(() => render(subject))
 
     const locationInfo = screen.getByText("Venues near your location")
-    expect(locationInfo).toBeDefined()
+    expect(locationInfo).toBeInTheDocument()
   })
 
   test('location info when user location not provided', async () => {
@@ -59,7 +60,7 @@ describe("App", () => {
     await waitFor(() => render(subject))
 
     const locationInfo = screen.getByText("Venues near the city centre")
-    expect(locationInfo).toBeDefined()
+    expect(locationInfo).toBeInTheDocument()
   })
 })
 

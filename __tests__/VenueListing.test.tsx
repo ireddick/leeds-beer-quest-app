@@ -1,5 +1,6 @@
 import { describe, expect, test } from "@jest/globals"
 import { render, screen, waitFor } from "@testing-library/react"
+import "@testing-library/jest-dom/jest-globals"
 import VenueListing from "@/app/VenueListing"
 import { TEST_VENUE_DATA } from "./__support__/venue_data"
 
@@ -15,9 +16,9 @@ describe("VenueListing", () => {
     const titleLink = screen.getByText(venue.name)
     expect(titleLink.getAttribute("href")).toBe(venue.url)
     const address = screen.getByText(venue.address)
-    expect(address).toBeDefined()
+    expect(address).toBeInTheDocument()
     const excerpt = screen.getByText(venue.excerpt)
-    expect(excerpt).toBeDefined()
+    expect(excerpt).toBeInTheDocument()
   })
 
   test("distance away", async () => {
@@ -30,7 +31,7 @@ describe("VenueListing", () => {
     await waitFor(() => render(subject))
 
     const distance = screen.getByText("📍 2.5km")
-    expect(distance).toBeDefined()
+    expect(distance).toBeInTheDocument()
   })
 
   test("distance away under 0.05km", async () => {
@@ -43,7 +44,7 @@ describe("VenueListing", () => {
     await waitFor(() => render(subject))
 
     const distance = screen.getByText("📍 0km")
-    expect(distance).toBeDefined()
+    expect(distance).toBeInTheDocument()
   })
 
   test("map link", async () => {
@@ -75,7 +76,7 @@ describe("VenueListing", () => {
 
     venue.tags.forEach(t => {
       const tag = screen.getByText(t)
-      expect(tag).toBeDefined()
+      expect(tag).toBeInTheDocument()
     })
   })
 })

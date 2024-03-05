@@ -1,5 +1,6 @@
 import { describe, expect, test } from "@jest/globals"
 import { render, screen, waitFor } from "@testing-library/react"
+import "@testing-library/jest-dom/jest-globals"
 import Rating, { RATING_IMAGE_PATH } from "@/app/Rating"
 
 describe("Rating", () => {
@@ -13,8 +14,7 @@ describe("Rating", () => {
     await waitFor(() => render(subject))
 
     const image = screen.getByAltText(expected)
-
-    expect(image).toBeDefined()
+    expect(image).toBeInTheDocument()
     expect(image.getAttribute("src"))
       .toBe(`${RATING_IMAGE_PATH}/${expected}.svg`)
   })
