@@ -11,24 +11,26 @@ export async function findVenues(
 ) {
   const beerQuestRecords = await fetchData()
 
+  const isNoSearchTerm = searchTerm.trim() === ""
+
   const filteredRecords: BeerQuestRecord[] =
-    beerQuestRecords
-      .filter((venue) => {
-        if (searchTerm.trim() === "") { return true }
+    isNoSearchTerm ?
+      beerQuestRecords :
+      beerQuestRecords
+        .filter((venue) => {
+          return venue.tags.join(" ").includes(searchTerm)
+        })
 
-        return venue.tags.join(" ").includes(searchTerm)
-      })
-
-  const venues: Venue[] =
+  const results: Venue[] =
     filteredRecords
       .map((record) => ({
         ...record,
         distance: getDistance(location, { lat: record.lat, lng: record.lng })
       }))
 
-  venues.sort((a, b) => a.distance - b.distance)
+  results.sort((a, b) => a.distance - b.distance)
 
-  return venues
+  return results
 }
 
 export interface Coord {
