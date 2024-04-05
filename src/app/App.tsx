@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, FormEvent } from "react"
 import styles from "./App.module.css";
 import { LocationProvider } from "./lib/location_service"
 import { VenueFinder, Venue, Coord } from "./lib/venue_service"
@@ -58,9 +58,10 @@ export default function App({
     refreshVenues()
   }, [location, searchTerm, findVenues, windowWrapper])
 
-  function onSearchSubmit(e: any) {
+  function onSearchSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const searchTerm = e.target.searchTerm.value
+    const formData = new FormData(e.currentTarget)
+    const searchTerm = formData.get("searchTerm")?.toString() || ""
 
     setSearchTerm(searchTerm)
   }
