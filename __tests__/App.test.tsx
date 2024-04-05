@@ -78,7 +78,7 @@ describe("App", () => {
     await user.type(searchField, "music{enter}")
 
     expect(mockFindVenues).toHaveBeenCalledWith(
-      TEST_USER_LOCATION, "music")
+      TEST_USER_LOCATION, "wifi")
   })
 })
 
