@@ -1,8 +1,9 @@
-import { describe, expect, test } from "@jest/globals"
+import { describe, expect, test, jest } from "@jest/globals"
 import { render, screen, waitFor } from "@testing-library/react"
 import "@testing-library/jest-dom/jest-globals"
+import userEvent from '@testing-library/user-event'
 import App from "@/app/App"
-import { Coord } from "@/app/lib/venue_service"
+import { Coord, VenueFinder } from "@/app/lib/venue_service"
 import { TEST_VENUE_DATA } from "./__support__/venue_data"
 
 describe("App", () => {
@@ -62,10 +63,29 @@ describe("App", () => {
     const locationInfo = screen.getByText("Venues near the city centre")
     expect(locationInfo).toBeInTheDocument()
   })
+
+  test('search by tag', async () => {
+    const user = userEvent.setup()
+    const mockFindVenues = jest.fn<VenueFinder>(stubbedFindVenues)
+    const subject =
+      <App
+        findVenues={mockFindVenues}
+        getLocation={stubbedGetLocation}
+        windowWrapper={stubbedWindowWrapper} />
+    await waitFor(() => render(subject))
+
+    const searchField = screen.getByPlaceholderText("Filter by tag")
+    await user.type(searchField, "music{enter}")
+
+    expect(mockFindVenues).toHaveBeenCalledWith(
+      TEST_USER_LOCATION, "music")
+  })
 })
 
+const TEST_USER_LOCATION = { lat: 50, lng: 50 }
+
 async function stubbedGetLocation() {
-  return { lat: 50, lng: 50 }
+  return TEST_USER_LOCATION
 }
 
 async function stubbedFindVenues(location: Coord, searchTerm: string) {
