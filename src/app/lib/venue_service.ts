@@ -16,8 +16,13 @@ export async function findVenues(
   const filteredRecords: BeerQuestRecord[] =
     beerQuestRecords
       .filter((record) => {
-        return record.category !== CATEGORY_CLOSED &&
-          record.tags.join(" ").includes(sanitisedSearchTerm)
+        if (record.category === CATEGORY_CLOSED) { return false }
+
+        if (sanitisedSearchTerm.length > 0) {
+          return record.tags.join(" ").includes(sanitisedSearchTerm)
+        } else {
+          return true
+        }
       })
 
   const results: Venue[] =
