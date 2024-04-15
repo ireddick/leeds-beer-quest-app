@@ -13,7 +13,7 @@ export async function findVenues(
 
   const beerQuestRecords = await fetchData()
 
-  const filteredRecords: BeerQuestRecord[] =
+  const matchingRecords: BeerQuestRecord[] =
     beerQuestRecords
       .filter((record) => {
         if (record.category === CATEGORY_CLOSED) { return false }
@@ -26,13 +26,12 @@ export async function findVenues(
       })
 
   const results: Venue[] =
-    filteredRecords
+    matchingRecords
       .map((record) => ({
         ...record,
         distance: getDistance(location, { lat: record.lat, lng: record.lng })
       }))
-
-  results.sort((a, b) => a.distance - b.distance)
+      .sort((a, b) => a.distance - b.distance)
 
   return results
 }
