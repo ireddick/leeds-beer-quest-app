@@ -9,17 +9,16 @@ export async function findVenues(
   searchTerm: string,
   fetchData: BeerQuestDataProvider = fetchDataFromApi
 ) {
+  const sanitisedSearchTerm = searchTerm.trim().toLowerCase()
+
   const beerQuestRecords = await fetchData()
 
-  const isNoSearchTerm = searchTerm.trim() === ""
-
   const filteredRecords: BeerQuestRecord[] =
-    isNoSearchTerm ?
-      beerQuestRecords :
-      beerQuestRecords
-        .filter((venue) => {
-          return venue.tags.join(" ").includes(searchTerm)
-        })
+    beerQuestRecords
+      .filter((record) => {
+        return record.category !== "Closed venues" &&
+          record.tags.join(" ").includes(sanitisedSearchTerm)
+      })
 
   const results: Venue[] =
     filteredRecords

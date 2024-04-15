@@ -3,6 +3,24 @@ import { findVenues } from "@/app/lib/venue_service"
 import { BeerQuestRecord } from "@/app/lib/beer_quest"
 
 describe("venue finder", () => {
+  test("does not include closed venues in results", async () => {
+    const closedVenue: BeerQuestRecord = {
+      ...TEST_BEER_QUEST_DATA[0],
+      name: "The Closed Bar",
+      category: "Closed venues"
+    }
+    const withOneClosedVenue = async () => {
+      return [...TEST_BEER_QUEST_DATA, closedVenue]
+    }
+
+    const result =
+      await findVenues({ lat: 50, lng: 50 }, "", withOneClosedVenue)
+    const resultNames = result.map(venue => venue.name)
+
+    expect(result.length).toEqual(TEST_BEER_QUEST_DATA.length)
+    expect(resultNames).not.toContain(closedVenue.name)
+  })
+
   describe("distance to venues", () => {
     test('computes the distance to each venue in meters', async () => {
       const result = await findVenues({ lat: 50, lng: 50 }, "", readTestData)
@@ -73,7 +91,7 @@ const TEST_BEER_QUEST_DATA: BeerQuestRecord[] = [
   },
   {
     name: "Pub B",
-    category: "Closed venues",
+    category: "Pub reviews",
     url: "https://example.com/pub-b",
     date: (new Date()).toISOString(),
     excerpt: "Pub B is very nice",
