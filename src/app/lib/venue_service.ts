@@ -1,5 +1,5 @@
 import { getDistance } from "geolib"
-import { BeerQuestRecord } from "./beer_quest"
+import { BeerQuestRecord, CATEGORY_CLOSED } from "./beer_quest"
 
 export type VenueFinder =
   (location: Coord, searchTerm: string) => Promise<Venue[]>
@@ -16,7 +16,7 @@ export async function findVenues(
   const filteredRecords: BeerQuestRecord[] =
     beerQuestRecords
       .filter((record) => {
-        return record.category !== "Closed venues" &&
+        return record.category !== CATEGORY_CLOSED &&
           record.tags.join(" ").includes(sanitisedSearchTerm)
       })
 

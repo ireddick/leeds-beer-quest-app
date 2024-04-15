@@ -1,13 +1,13 @@
 import { describe, expect, test } from "@jest/globals"
 import { findVenues } from "@/app/lib/venue_service"
-import { BeerQuestRecord } from "@/app/lib/beer_quest"
+import { BeerQuestRecord, CATEGORY_CLOSED } from "@/app/lib/beer_quest"
 
 describe("venue finder", () => {
   test("does not include closed venues in results", async () => {
     const closedVenue: BeerQuestRecord = {
       ...TEST_BEER_QUEST_DATA[0],
       name: "The Closed Bar",
-      category: "Closed venues"
+      category: CATEGORY_CLOSED
     }
     const withOneClosedVenue = async () => {
       return [...TEST_BEER_QUEST_DATA, closedVenue]

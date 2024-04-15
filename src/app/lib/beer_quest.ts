@@ -43,3 +43,5 @@ export interface BeerQuestRecord {
   stars_value: number
   tags: string[]
 }
+
+export const CATEGORY_CLOSED = "Closed venues"
