@@ -1,6 +1,7 @@
 import styles from "./VenueListing.module.css"
 import { Venue } from "./lib/venue_service"
 import Rating from "./Rating"
+import Image from "next/image"
 
 interface VenueListingProps {
   venue: Venue
@@ -29,9 +30,10 @@ export default function VenueListing({ venue }: VenueListingProps) {
         </p>
       </div>
       <div className={styles.thumbnailContainer}>
-        <img className={styles.thumbnail}
+        <Image className={styles.thumbnail}
           src={venue.thumbnail}
-          alt={`Photo of ${venue.name}`} />
+          alt={`Photo of ${venue.name}`}
+          fill={true} />
       </div>
     </div>
   )
