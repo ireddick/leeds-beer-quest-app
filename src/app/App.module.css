@@ -15,8 +15,17 @@
   margin-bottom: 4px;
 }
 
+.search * {
+  font-size: 1.25rem;
+}
+
 .search input {
-  font-size: inherit;
+  margin-right: 4px;
+  width: 10rem;
+}
+
+.search button {
+  padding: 3px;
 }
 
 .venueList {

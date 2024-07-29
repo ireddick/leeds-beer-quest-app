@@ -66,18 +66,25 @@ export default function App({
     setSearchTerm(searchTerm)
   }
 
+  function onSearchReset(e: FormEvent<HTMLFormElement>) {
+    setSearchTerm("")
+  }
+
   return (
     <>
       <header className={styles.appHeading}>
         <h1 className={styles.title}>Leeds Pub Finder&nbsp;🍺</h1>
         <p className={styles.location}>{`Venues near ${userLocationText}`}</p>
         <search>
-          <form className={styles.search} onSubmit={onSearchSubmit}>
+          <form className={styles.search}
+            onSubmit={onSearchSubmit}
+            onReset={onSearchReset}
+          >
             <input
               name="searchTerm"
               type="text"
-              placeholder="Filter by tag">
-            </input>
+              placeholder="Filter by tag" />
+            <button type="reset" disabled={!searchTerm.length}>clear</button>
           </form>
         </search>
       </header>
