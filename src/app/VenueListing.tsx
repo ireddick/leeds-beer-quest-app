@@ -31,7 +31,8 @@ export default function VenueListing({ venue }: VenueListingProps) {
       <div className={styles.thumbnailContainer}>
         <img className={styles.thumbnail}
           src={venue.thumbnail}
-          alt={`Photo of ${venue.name}`} />
+          alt={`Photo of ${venue.name}`}
+          loading="lazy" />
       </div>
     </div>
   )
